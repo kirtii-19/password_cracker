@@ -7,15 +7,8 @@ import time
 st.set_page_config(page_title="Password Cracking Simulator", layout="centered")
 
 st.title("🔐 Password Cracking Simulator")
-st.caption("Educational cybersecurity project – ethical use only")
-
-st.warning(
-    "⚠️ This app is for EDUCATIONAL PURPOSES ONLY.\n"
-    "Use only on passwords you own or in test environments."
-)
-
-# ---------------- Hash Generator ----------------
-st.header("1️⃣ Password Hash Generator")
+st.caption("for educational purposes only!")
+st.header("Password Hash Generator")
 
 password = st.text_input("Enter password to hash", type="password")
 algo = st.selectbox("Hash Algorithm", ["SHA-256", "MD5", "SHA-1"])
@@ -34,13 +27,11 @@ if st.button("Generate Hash"):
     else:
         st.error("Please enter a password")
 
-# ---------------- Attack Section ----------------
-st.header("2️⃣ Password Cracking")
+st.header("Password Cracking")
 
 target_hash = st.text_input("Enter target hash (SHA-256)")
 attack = st.radio("Select Attack Type", ["Dictionary Attack", "Brute Force Attack"])
 
-# ---------------- Dictionary Attack ----------------
 if attack == "Dictionary Attack":
     if st.button("Start Dictionary Attack"):
         start = time.time()
@@ -50,14 +41,14 @@ if attack == "Dictionary Attack":
             for word in f:
                 word = word.strip()
                 if hashlib.sha256(word.encode()).hexdigest() == target_hash:
-                    st.success(f"✅ Password Cracked: {word}")
+                    st.success(f"Password Cracked: {word}")
                     found = True
                     break
 
         if not found:
-            st.error("❌ Password not found in wordlist")
+            st.error("Password not found in wordlist")
 
-        st.info(f"⏱ Time taken: {round(time.time() - start, 4)} seconds")
+        st.info(f"Time taken: {round(time.time() - start, 4)} seconds")
 
 # ---------------- Brute Force Attack ----------------
 if attack == "Brute Force Attack":
@@ -72,24 +63,15 @@ if attack == "Brute Force Attack":
             for guess in itertools.product(chars, repeat=length):
                 guess = ''.join(guess)
                 if hashlib.sha256(guess.encode()).hexdigest() == target_hash:
-                    st.success(f"✅ Password Cracked: {guess}")
+                    st.success(f"Password Cracked: {guess}")
                     found = True
                     break
             if found:
                 break
 
         if not found:
-            st.error("❌ Password not cracked")
+            st.error(" Password not cracked")
 
-        st.info(f"⏱ Time taken: {round(time.time() - start, 4)} seconds")
+        st.info(f" Time taken: {round(time.time() - start, 4)} seconds")
 
-# ---------------- Lessons ----------------
-st.header("3️⃣ Security Lessons")
-st.markdown("""
-- Weak passwords are easy to crack
-- Dictionary attacks are very fast
-- Brute force grows exponentially
-- Use **bcrypt / Argon2**
-- Always **salt** passwords
-- Enable **MFA**
-""")
+
